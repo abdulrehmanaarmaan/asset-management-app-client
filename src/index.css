@@ -18,5 +18,5 @@ body {
 }
 
 .drawer-side ul a span {
-    @apply hover:text-blue-500
+    @apply hover:text-blue-50
 }

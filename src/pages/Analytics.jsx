@@ -67,7 +67,7 @@ const Analytics = () => {
                     {/* Pie Chart Section */}
                     <div className="bg-white p-6 rounded-2xl shadow-sm">
                         <div className="flex items-center gap-2 mb-4">
-                            <PieIco className="w-5 h-5 text-gray-600" />
+                            <PieIcon className="w-5 h-5 text-gray-600" />
                             <h2 className="text-lg font-semibold">
                                 Returnable vs Non-returnable Items
                             </h2>
@@ -75,7 +75,7 @@ const Analytics = () => {
 
                         <div className="w-full h-72 flex justify-center items-center">
                             {assetsPerHr.length > 0 ? <ResponsiveContainer>
-                                <PieChart>
+                                <PieChar>
                                     <Pie
                                         data={getPieChartData(assetsPerHr)}
                                         dataKey="value"

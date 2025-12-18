@@ -6,7 +6,6 @@ import toast from 'react-hot-toast';
 import useLoader from '../hooks/UseLoader';
 import Loader from '../components/Loader';
 import axios from 'axios';
-import { AuthContext } from '../contexts/AuthContext';
 import useAxiosSecure from '../hooks/UseAxiosSecure';
 import useUserInfo from '../hooks/UseUserInfo';
 // import { AuthContext } from '../contexts/AuthContext';
@@ -227,70 +226,12 @@ const AssetList = () => {
                                             productQuantity: asset?.productQuantity
                                         })
 
-                                        document.getElementById(`modal_edit_${asset?._id}`).showModal()
+                                        document.getElementById('modal_edit').showModal()
                                     }}>Edit</button>
 
                                     <button className="btn btn-sm btn-error text-white" onClick={() => document.getElementById(`modal_delete_${asset?._id}`).showModal()}>Delete</button>
 
                                     {/* Open the modal using document.getElementById('ID').showModal() method */}
-                                    <dialog id={`modal_edit_${asset?._id}`} className="modal modal-bottom sm:modal-middle">
-                                        {/* if there is a button in form, it will close the modal */}
-                                        <div className="modal-box bg-linear-to-b from-gray-50 to-gray-200 overflow-y-auto px-4 rounded-none md:rounded-lg max-h-[90vh]">
-                                            <div className='modal-action flex-col mt-0'>
-                                                <div>
-                                                    <h1 className='text-2xl font-bold text-center mb-4'>Update Asset Info: {selectedAsset?.productName}</h1>
-                                                </div>
-                                                <div className="card bg-base-100 w-fit shrink-0 border border-gray-300 mx-auto">
-                                                    <div className="card-body">
-                                                        <form onSubmit={handleSubmit(data => handleEditAsset(data, asset?._id))} method="dialog">
-                                                            <fieldset className="fieldset grid-cols-1 gap-4 text-left">
-                                                                <div>
-                                                                    <label className="label mb-1">Product Name</label>
-                                                                    <input type="text" className="input block w-full rounded-lg" placeholder="Product Name" {...register('productName', {
-                                                                        required: true
-                                                                    })} />
-                                                                </div>
-
-                                                                <div>
-                                                                    <label className="label mb-1">Current Product Image</label>
-                                                                    <img src={asset?.productImage} alt="" className='max-w-6 rounded' />
-                                                                </div>
-
-                                                                <div>
-                                                                    <label className="label mb-1">New Product Image (optional)</label>
-                                                                    <input type="file" accept="image/*" className="input block w-full rounded-lg" {...register('productImage')} />
-                                                                </div>
-                                                                <div>
-                                                                    <label className="label mb-1">Product Type</label>
-                                                                    <select className="select appearance-none block w-full rounded-lg" {...register('productType', { required: true })}>
-                                                                        <option value='' disabled>Pick a type</option>
-                                                                        <option value='Returnable'>Returnable</option>
-                                                                        <option value='Non-returnable'>Non-returnable</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div>
-                                                                    <label className="label mb-1">Product Quantity</label>
-                                                                    <input type="text" className="input block w-full rounded-lg" placeholder="Product Quantity" {...register('productQuantity', {
-                                                                        required: true, pattern: {
-                                                                            value: /^[0-9]+$/, message: 'Please type only an integer.'
-                                                                        }
-                                                                    })} />
-                                                                    {errors.productQuantity && <p className='text-red-500 mt-2'>{errors.
-                                                                        productQuantity.
-                                                                        message}</p>}
-                                                                </div>
-                                                            </fieldset>
-                                                            {Object.values(errors).some(err => err.type === 'required') && <p
-                                                                className='text-red-500 mt-2'>All fields are required.</p>}
-                                                            <button className="btn bg-blue-500 mt-3 max-w-full w-full text-white hover:bg-blue-400 rounded-lg">Update Asset</button>
-                                                        </form>
-
-                                                        <button className="btn rounded-lg" onClick={() => document.getElementById(`modal_edit_${asset?._id}`).close()}>Cancel</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </dialog>
 
                                     {/* Open the modal using document.getElementById('ID').showModal() method */}
                                     <dialog id={`modal_delete_${asset?._id}`} className="modal modal-bottom sm:modal-middle">
@@ -308,6 +249,65 @@ const AssetList = () => {
                                 </td>
                             </tr>
                         )}
+
+                        <dialog id={'modal_edit'} className="modal modal-bottom sm:modal-middle">
+                            {/* if there is a button in form, it will close the modal */}
+                            <div className="modal-box bg-linear-to-b from-gray-50 to-gray-200 overflow-y-auto px-4 rounded-none md:rounded-lg max-h-[90vh]">
+                                <div className='modal-action flex-col mt-0'>
+                                    <div>
+                                        <h1 className='text-2xl font-bold text-center mb-4'>Update Asset Info: {selectedAsset?.productName}</h1>
+                                    </div>
+                                    <div className="card bg-base-100 w-fit shrink-0 border border-gray-300 mx-auto">
+                                        <div className="card-body">
+                                            <form onSubmit={handleSubmit(data => handleEditAsset(data, selectedAsset?._id))} method="dialog">
+                                                <fieldset className="fieldset grid-cols-1 gap-4 text-left">
+                                                    <div>
+                                                        <label className="label mb-1">Product Name</label>
+                                                        <input type="text" className="input block w-full rounded-lg" placeholder="Product Name" {...
+                                                            register('productName', {
+                                                                required: true
+                                                            })} />
+                                                    </div>
+                                                    <div>
+                                                        <label className="label mb-1">Current Product Image</label>
+                                                        <img src={selectedAsset?.productImage} alt="" className='max-w-6 rounded' />
+                                                    </div>
+                                                    <div>
+                                                        <label className="label mb-1">New Product Image (optional)</label>
+                                                        <input type="file" accept="image/*" className="input block w-full rounded-lg" {...register('productImage')} />
+                                                    </div>
+                                                    <div>
+                                                        <label className="label mb-1">Product Type</label>
+                                                        <select className="select appearance-none block w-full rounded-lg" {...register('productType', { required: true })}>
+                                                            <option value='' disabled>Pick a type</option>
+                                                            <option value='Returnable'>Returnable</option>
+                                                            <option value='Non-returnable'>Non-returnable</option>
+                                                        </select>
+                                                    </div>
+                                                    <div>
+                                                        <label className="label mb-1">Product Quantity</label>
+                                                        <input type="text" className="input block w-full rounded-lg" placeholder="Product Quantity"
+                                                            {...register('productQuantity', {
+                                                                required: true, pattern: {
+                                                                    value: /^[0-9]+$/, message: 'Please type only an integer.'
+                                                                }
+                                                            })} />
+                                                        {errors.productQuantity && <p className='text-red-500 mt-2'>{errors.
+                                                            productQuantity.
+                                                            message}</p>}
+                                                    </div>
+                                                </fieldset>
+                                                {Object.values(errors).some(err => err.type === 'required') && <p
+                                                    className='text-red-500 mt-2'>All fields are required.</p>}
+                                                <button className="btn bg-blue-500 mt-3 max-w-full w-full text-white hover:bg-blue-400 rounded-lg">Update Asset</button>
+                                            </form>
+                                            <button className="btn rounded-lg" onClick={() => document.getElementById('modal_edit').
+                                                close()}>Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </dialog>
                     </tbody>
                 </table>}
             </div>

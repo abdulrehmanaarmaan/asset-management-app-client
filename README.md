@@ -90,7 +90,7 @@ https://assignment-11-client-f195a.web.app
 3. Create a .env file with the required environment variables.
 4. Start the development server using npm run dev.
 
-## Environment variables configuration
+## Environment Variables Configuration
 Firebase configuration keys (API key, auth domain, project ID, storage bucket, messaging sender ID, app ID), backend API base URL, and payment gateway public key (if applicable)
 
 ## Run The Project
@@ -99,6 +99,6 @@ Client: npm run dev
 
 Server: nodemon index.js
 
-## Clone the repositories
+## Clone The Repositories
 - https://github.com/abdulrehmanaarmaan/Assignment-11-Client
 - https://github.com/abdulrehmanaarmaan/Assignment-11-Server

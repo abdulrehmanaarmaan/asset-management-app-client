@@ -10,7 +10,9 @@ Screenshot:
 <img alt="Screenshot 2025-12-31 133622" src="https://github.com/user-attachments/assets/d49c877d-aaea-4784-a8ea-f3eda38aea0b" />
 
 Technologies used: 
+
 Frontend: React, Tailwind CSS, TanStack Query, Axios, Recharts
+
 Backend: Node.js, Express.js, MongoDB, Firebase
 
 Key features list: Role-based authentication for HR and employees, asset request and approval workflow, employee asset assignment and return management, package-based subscription system for HRs, real-time dashboard analytics, secure private routes, responsive UI for mobile, tablet, and desktop, profile management, payment history tracking, and modern UX with loaders and toasts
@@ -22,5 +24,13 @@ Setup instructions: Clone the repository, install dependencies using npm install
 Environment variables configuration: Firebase configuration keys (API key, auth domain, project ID, storage bucket, messaging sender ID, app ID), backend API base URL, and payment gateway public key (if applicable)
 
 Run the project:
+
 Client: npm run dev
+
 Server: nodemon index.js
+
+Clone the repositories:
+
+https://github.com/abdulrehmanaarmaan/Assignment-11-Client
+
+https://github.com/abdulrehmanaarmaan/Assignment-11-Server

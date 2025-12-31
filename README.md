@@ -17,7 +17,7 @@ https://assignment-11-client-f195a.web.app
 Frontend: React, Tailwind CSS, TanStack Query, Axios, Recharts
 Backend: Node.js, Express.js, MongoDB, Firebase
 
-# Key Features List
+## Key Features List
 Role-based authentication for HR and employees, asset request and approval workflow, employee asset assignment and return management, package-based subscription system for HRs, real-time dashboard analytics, secure private routes, responsive UI for mobile, tablet, and desktop, profile management, payment history tracking, and modern UX with loaders and toasts
 
 ## npm Packages Used 

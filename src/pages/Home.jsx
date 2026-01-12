@@ -2,7 +2,7 @@ import { BarChart2, CheckCircle, Layers, Shield, Users, Zap } from 'lucide-react
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import useUserInfo from '../hooks/UseUserInfo';
-import { use, useState } from 'react';
+import { use } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import Loader from '../components/Loader';
 import { useNavigate } from 'react-router';
@@ -82,7 +82,7 @@ const Home = () => {
                 </section>
 
                 <section className="py-20 px-6 bg-gray-50">
-                    <h2 className="text-3xl font-semibold text-gray-800 tracking-tight mb-6 text-center">Why Choose AssetVerse?</h2>
+                    <h2 className="text-3xl font-semibold text-gray-800 tracking-tight mb-6 text-center heading">Why Choose AssetVerse?</h2>
                     <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                         <div className="p-6 bg-white rounded-xl shadow-sm border border-gray-300">
                             <Users className="h-10 w-10 text-blue-600 mb-4" />
@@ -103,7 +103,7 @@ const Home = () => {
                 </section>
 
                 <section className="py-20 px-6">
-                    <h2 className="text-3xl font-semibold text-gray-800 tracking-tight mb-6 text-center">Choose Your Plan</h2>
+                    <h2 className="text-3xl font-semibold text-gray-800 tracking-tight mb-6 text-center heading">Choose Your Plan</h2>
                     <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                         {isLoading ? <Loader></Loader> : pkgs.map((pkg, index) => <motion.div
                             key={pkg.name}
@@ -136,7 +136,7 @@ const Home = () => {
                                     <div className="modal-action">
                                         <form method="dialog">
                                             {/* if there is a button in form, it will close the modal */}
-                                            <button className="btn hover:bg-blue-50">Cancel</button>
+                                            <button className="btn btn-outline hover:bg-blue-50">Cancel</button>
                                         </form>
                                     </div>
                                 </div>
@@ -182,7 +182,7 @@ const Home = () => {
                 </section>
 
                 <section className="py-20 px-6 bg-gray-50">
-                    <h2 className="text-3xl font-semibold text-gray-800 tracking-tight mb-6 text-center">How It Works</h2>
+                    <h2 className="text-3xl font-semibold text-gray-800 tracking-tight mb-6 text-center heading">How It Works</h2>
                     <div className="grid md:grid-cols-3 gap-10 max-w-5xl mx-auto">
                         {[
                             { step: "1", title: "Create Your Company", desc: "Set up your organization and HR access." },
@@ -212,6 +212,50 @@ const Home = () => {
                             </div>
                         ))}
                     </div>
+                </section>
+
+                <section className="py-20 px-6 bg-gray-50 text-center">
+                    <h2 className="text-3xl font-semibold mb-6 text-gray-800 tracking-tight">What Our Users Say</h2>
+                    <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                        {[
+                            { quote: "AssetVerse simplified our workflow completely.", name: "HR Manager, Company A" },
+                            { quote: "We can track assets and employees without any hassle now.", name: "Operations Lead, Company B" },
+                            { quote: "The analytics help us make smarter decisions daily.", name: "CEO, Company C" },
+                        ].map((item, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: i * 0.2 }}
+                                className="p-6 bg-white rounded-xl shadow-sm border border-gray-300"
+                            >
+                                <p className="text-gray-600 mb-4 italic">"{item.quote}"</p>
+                                <h3 className="font-semibold text-gray-800">{item.name}</h3>
+                            </motion.div>
+                        ))}
+                    </div>
+                </section>
+
+
+                <section className="py-20 px-6 text-center bg-blue-50">
+                    <h2 className="text-3xl font-semibold mb-6 text-gray-800 tracking-tight">Stay Updated with AssetVerse</h2>
+                    <p className="mb-6 text-gray-700 max-w-xl mx-auto">
+                        Get the latest updates, tips, and resources straight to your inbox.
+                    </p>
+                    <form className="flex justify-center gap-2 max-w-md mx-auto">
+                        <input
+                            type="email"
+                            placeholder="Enter your email"
+                            className="px-4 py-2 rounded-l-lg border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required
+                        />
+                        <button
+                            type="submit"
+                            className="px-6 py-2 bg-blue-500 text-white rounded-r-lg hover:bg-blue-400 font-semibold cursor-pointer"
+                        >
+                            Subscribe
+                        </button>
+                    </form>
                 </section>
 
                 <section className="py-20 px-6 text-center bg-blue-600 text-white">

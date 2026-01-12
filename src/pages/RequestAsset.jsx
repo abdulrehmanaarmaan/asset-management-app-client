@@ -5,6 +5,7 @@ import useLoader from '../hooks/UseLoader';
 import Loader from '../components/Loader';
 import toast from 'react-hot-toast';
 import useUserInfo from '../hooks/UseUserInfo';
+import SkeletonLoader from '../components/SkeletonLoader';
 // import { AuthContext } from '../contexts/AuthContext';
 
 const RequestAsset = () => {
@@ -83,11 +84,12 @@ const RequestAsset = () => {
             <h1 className='text-3xl font-semibold text-gray-800 tracking-tight text-center mb-6'>Request an Asset</h1>
             {assetsMoreThanZero.length > 0 ? < p className='text-2xl font-bold mb-6 text-center text-gray-600 px-4'>Choose an available request and submit an asset</p>
                 : < h1 className='text-2xl font-bold mb-6 text-center text-gray-600 px-4'>No assets added yet</h1>}
-            <div className='grid lg:grid-cols-3 md:grid-cols-2 gap-6 max-w-[1300px] mx-auto px-4 md:px-6 lg:px-8'>
-                {isLoading ? <Loader></Loader> :
+            <div className='grid lg:grid-cols-3 md:grid-cols-2 gap-6 max-w-325 mx-auto px-4 md:px-6 lg:px-8'
+                aria-busy={isLoading} aria-label="Loading assets..." role="status">
+                {isLoading ? <SkeletonLoader count={6}></SkeletonLoader> :
                     assetsMoreThanZero.map(asset =>
                         <div key={asset?._id} className='card bg-base-100 shadow-lg border border-gray-200'>
-                            <figure className='overflow-hidden rounded-t-xl'>
+                            <figure className='overflow-hidden'>
                                 <img src={asset?.productImage} alt={asset?.productName} className='h-40 object-cover w-full' />
                             </figure>
                             <div className='card-body text-center justify-center'>
@@ -99,10 +101,11 @@ const RequestAsset = () => {
                                 <p className='text-gray-600 text-sm'>
                                     Available: {asset?.productQuantity}
                                 </p>
-                                <button className={`btn mt-3 ${requestedAssetsIds.includes(asset?._id) ? 'bg-gray-200 text-gray-500 uppercase tracking-wide cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-400'}`} onClick={() => {
+                                <button className={`btn mt-3 rounded-lg ${requestedAssetsIds.includes(asset?._id) ? 'bg-gray-200 text-gray-500 tracking-wide cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-400'}`} onClick={() => {
                                     setSelectedAsset(asset)
                                     document.getElementById("requestModal").showModal()
-                                }} disabled={requestedAssetsIds.includes(asset?._id)}>{requestedAssetsIds.includes(asset?._id) ? 'Already Requested' : 'Request'}</button>
+                                }} disabled={requestedAssetsIds.includes(asset?._id)}
+                                    aria-disabled={requestedAssetsIds.includes(asset?._id)}>{requestedAssetsIds.includes(asset?._id) ? 'Already Requested' : 'Request'}</button>
                                 <dialog id={"requestModal"} className="modal modal-bottom sm:modal-middle">
                                     <div className="modal-box">
                                         <h3 className="font-bold text-xl mb-3 text-center">
@@ -118,12 +121,12 @@ const RequestAsset = () => {
                                                 minLength={10}
                                                 maxLength={300}
                                             ></textarea>
-                                            <button className="btn bg-blue-500 hover:bg-blue-400 w-full text-white">
+                                            <button className="btn bg-blue-500 hover:bg-blue-400 w-full text-white rounded-lg">
                                                 Submit Request
                                             </button>
                                         </form>
                                         <div className="modal-action">
-                                            <button className="btn" onClick={() => document.getElementById("requestModal").close()}>
+                                            <button className="btn btn-outline" onClick={() => document.getElementById("requestModal").close()}>
                                                 Cancel
                                             </button>
                                         </div>

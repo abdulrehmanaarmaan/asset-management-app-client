@@ -143,7 +143,7 @@ const AllRequests = () => {
         <div>
             <h1 className='text-3xl font-semibold text-gray-800 tracking-tight mb-6 text-center'>All Requests</h1>
             {
-                unreturnedRequests?.length > 0 ? <p className='text-2xl font-bold mb-6 text-center text-gray-600'>Total Requests: {unreturnedRequests?.length}</p>
+                unreturnedRequests?.length > 0 ? <p className='text-2xl font-bold mb-6 text-center text-gray-600 sub-heading'>Total Requests: {unreturnedRequests?.length}</p>
                     : <p className='text-2xl font-bold mb-6 text-center text-gray-600'>No requests submitted yet</p>
             }
             <div className="shadow-sm overflow-x-auto">

@@ -66,7 +66,7 @@ const MyTeam = () => {
                     >
                         <option value='Pick a company' disabled>Pick a company</option>
                         {hrs.map(hr => (
-                            <option key={hr?._id} value={hr?.companyName}>
+                            <option key={hr?._id} value={hr?.companyName} className='dropdown-option'>
                                 {hr?.companyName}
                             </option>
                         ))}
@@ -80,7 +80,7 @@ const MyTeam = () => {
                             Colleagues at {selectedCompany}
                         </h2> : <p className="text-2xl font-bold mb-6 text-center text-gray-600">No team members yet</p>}
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {isLoading ? <Loader></Loader> : affiliatedEmployees.map((employee, index) => (
+                            {isLoading ? <Loader></Loader> : affiliatedEmployees.map((employee) => (
                                 <div
                                     key={employee?._id}
                                     className="card bg-base-100 shadow-lg border border-gray-200 rounded-xl"

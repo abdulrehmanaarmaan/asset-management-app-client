@@ -5,6 +5,7 @@ import { Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer,
 import useAxiosSecure from '../hooks/UseAxiosSecure';
 // import useUserInfo from '../hooks/UseUserInfo';
 import { AuthContext } from '../contexts/AuthContext';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 const Analytics = () => {
 
@@ -58,6 +59,13 @@ const Analytics = () => {
         return data.map(asset => { return { name: asset?.productName, requests: asset?.requestCount } })
     }
 
+    const { darkMode } = use(ThemeContext);
+
+    const barColor = darkMode ? '#86efac' : '#4fa94d';
+    const pieColors = darkMode ? ['#86efac', '#fca5a5'] : ['#4fa94d', '#f87171'];
+
+    const axesColor = darkMode ? '#9ca3af' : '#6b7280';
+
     return (
         <div>
             <div className="">
@@ -88,8 +96,8 @@ const Analytics = () => {
                                             label
                                         >
 
-                                            <Cell key='Returnable' fill='#4fa94d' />
-                                            <Cell key='Non-returnable' fill='#f87171' />
+                                            <Cell key='Returnable' fill={pieColors[0]} />
+                                            <Cell key='Non-returnable' fill={pieColors[1]} />
 
                                         </Pie>
                                         <Tooltip />
@@ -111,10 +119,22 @@ const Analytics = () => {
                                 {top5.length > 0 ? <ResponsiveContainer>
                                     <BarChart data={getBarChartData(top5)}>
                                         <CartesianGrid strokeDasharray="3 3" />
-                                        <XAxis dataKey="name" />
-                                        <YAxis />
+
+                                        <XAxis dataKey="name"
+                                            stroke={axesColor}
+                                            tick={{ fill: axesColor }}
+                                            tickLine={{ stroke: axesColor }}
+                                            axisLine={{ stroke: axesColor }} />
+
+                                        <YAxis
+                                            stroke={axesColor}
+                                            tick={{ fill: axesColor }}
+                                            tickLine={{ stroke: axesColor }}
+                                            axisLine={{ stroke: axesColor }}
+                                        />
+
                                         <Tooltip />
-                                        <Bar dataKey="requests" fill="#4fa94d" />
+                                        <Bar dataKey="requests" fill={barColor} />
                                     </BarChart>
                                 </ResponsiveContainer>
                                     : <p className='text-gray-500 text-sm'>No assets requested yet</p>}

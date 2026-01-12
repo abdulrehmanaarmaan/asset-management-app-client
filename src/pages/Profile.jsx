@@ -1,13 +1,13 @@
 import { AuthContext } from '../contexts/AuthContext';
 import { useForm } from 'react-hook-form';
 import useUserInfo from '../hooks/UseUserInfo';
-import useAxiosSecure from '../hooks/UseAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { use } from 'react';
 import axios from 'axios';
 import useLoader from '../hooks/UseLoader';
 import Loader from '../components/Loader';
 import toast from 'react-hot-toast';
+import useAxiosSecure from '../hooks/UseAxiosSecure';
 
 const Profile = () => {
 
@@ -17,7 +17,7 @@ const Profile = () => {
 
     const axiosInstanceSecure = useAxiosSecure();
 
-    const { email, name, profileImage, refetch } = useUserInfo()
+    const { email, name, profileImage, refetch, role } = useUserInfo()
 
     const { loader, startLoading, stopLoading } = useLoader()
 
@@ -188,30 +188,31 @@ const Profile = () => {
                 </div>
             </div>
 
-            <h2 className="text-2xl font-bold mt-10 mb-4 text-center text-gray-600">Company Affiliations</h2>
+            {role === 'employee' && <>
+                <h2 className="text-2xl font-bold mt-10 mb-4 text-center text-gray-600">Company Affiliations</h2>
 
-            {affiliationsPerEmployee.length === 0 ?
-                <p className="text-gray-500 text-center">You are not affiliated with any company.</p>
-                :
-                <div className="card bg-base-100 border shadow-md border-gray-300 max-w-3xl mx-auto">
-                    <div className="card-body space-y-3">
-                        {isLoading ? <Loader></Loader> : affiliationsPerEmployee.map(affiliation => (
-                            <div
-                                key={affiliation?._id}
-                                className="p-4 border border-gray-300 rounded-lg bg-gray-50 flex justify-between items-center shadow-sm flex-col md:flex-row"
-                            >
-                                <img src={affiliation?.companyLogo} alt={affiliation?.companyLogo} className='w-24 md:w-12 rounded-full object-cover mb-4 md:mb-0' referrerPolicy='no-referrer' />
+                {affiliationsPerEmployee.length === 0 ?
+                    <p className="text-gray-500 text-center">You are not affiliated with any company.</p>
+                    :
+                    <div className="card bg-base-100 border shadow-md border-gray-300 max-w-3xl mx-auto">
+                        <div className="card-body space-y-3">
+                            {isLoading ? <Loader></Loader> : affiliationsPerEmployee.map(affiliation => (
+                                <div
+                                    key={affiliation?._id}
+                                    className="p-4 border border-gray-300 rounded-lg bg-gray-50 flex justify-between items-center shadow-sm flex-col md:flex-row"
+                                >
+                                    <img src={affiliation?.companyLogo} alt={affiliation?.companyLogo} className='w-24 md:w-12 rounded-full object-cover mb-4 md:mb-0' referrerPolicy='no-referrer' />
 
-                                <div className='md:text-left text-center'>
-                                    <p className="font-semibold">{affiliation?.companyName}</p>
-                                    <p className="text-gray-600 text-sm">HR: {affiliation?.hrEmail}</p>
+                                    <div className='md:text-left text-center'>
+                                        <p className="font-semibold">{affiliation?.companyName}</p>
+                                        <p className="text-gray-600 text-sm">HR: {affiliation?.hrEmail}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            }
-        </div>
+                            ))}
+                        </div>
+                    </div>}
+            </>}
+        </div >
     );
 };
 

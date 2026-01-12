@@ -14,7 +14,7 @@ const RootLayout = () => {
         <div>
             <Navbar></Navbar>
 
-            <div className={`${location?.pathname === '/' ? 'pt-12' : 'py-12'} bg-linear-to-b from-gray-50 to-gray-200 min-h-screen`}>
+            <div className={`${!location?.pathname.startsWith('/dashboard') && !location?.pathname.startsWith('/registration') && !location?.pathname.startsWith('/login') && !location?.pathname.startsWith('/asset') ? 'pt-12' : 'py-12'} bg-linear-to-b from-gray-50 to-gray-200 min-h-screen bg-color`}>
                 <Outlet></Outlet>
             </div>
 

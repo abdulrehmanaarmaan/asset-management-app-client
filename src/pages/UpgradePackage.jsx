@@ -96,7 +96,7 @@ const UpgradePackage = () => {
 
     return (
         <div>
-            <div className="">
+            <div>
                 <div className="px-4 md:px-6 lg:px-8">
                     {/* ------------------ Title ------------------ */}
                     <div className="mb-6">

@@ -6,6 +6,7 @@ import Loader from '../components/Loader';
 import toast, { ToastBar } from 'react-hot-toast';
 import { useState } from 'react';
 import useUserInfo from '../hooks/UseUserInfo';
+import { useNavigate } from 'react-router';
 
 const MyAssets = () => {
 
@@ -15,7 +16,9 @@ const MyAssets = () => {
 
     const [assetType, setAssetType] = useState('All')
 
-    const { email } = useUserInfo()
+    const { email } = useUserInfo();
+
+    const navigate = useNavigate();
 
     const { data: assignedAssetsPerEmployee = [] } = useQuery({
         queryKey: ['assigned-assets-email', email],
@@ -108,14 +111,14 @@ const MyAssets = () => {
             {assignedAssetsPerEmployee?.length > 0 && <div className='flex flex-col md:flex-row justify-between items-center mb-6 lg:px-8 md:px-6 px-4 gap-4'>
                 <input type="text" placeholder='Search assets...' className='input input-bordered w-full lg:flex-1' onChange={(event) => setSearchAsset(event.target.value)} />
 
-                <select className='select select-bordered w-[180px] hover:cursor-pointer' defaultValue='All' onChange={(event) => setAssetType(event.target.value)}>
-                    <option value="All" className='w-52'>All</option>
-                    <option value="Returnable" className='w-52'>Returnable</option>
-                    <option value="Non-returnable" className='w-52'>Non-returnable</option>
+                <select className='select w-45 hover:cursor-pointer' defaultValue='All' onChange={(event) => setAssetType(event.target.value)}>
+                    <option value="All" className='w-52 dropdown-option'>All</option>
+                    <option value="Returnable" className='w-52 dropdown-option'>Returnable</option>
+                    <option value="Non-returnable" className='w-52 dropdown-option'>Non-returnable</option>
                 </select>
             </div>}
 
-            {filteredAssets.length > 0 &&
+            {filteredAssets.length > 0 ?
                 <div className="shadow-sm overflow-x-auto">
                     <table className="table text-center border-t border-gray-300 rounded-none">
                         {/* head */}
@@ -142,7 +145,7 @@ const MyAssets = () => {
                                     </td>
                                     <td className='font-medium'>{assignedAsset?.assetName}</td>
 
-                                    <td className='min-w-[120px]'><span className={`badge text-[12px] font-semibold whitespace-nowrap ${assignedAsset?.assetType === 'Returnable' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                                    <td className='min-w-30'><span className={`badge text-[12px] font-semibold whitespace-nowrap ${assignedAsset?.assetType === 'Returnable' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                                         {assignedAsset?.assetType}</span></td>
 
                                     <td>{assignedAsset?.companyName}</td>
@@ -150,8 +153,20 @@ const MyAssets = () => {
                                     <td className='text-gray-600'>{new Date(assignedAsset?.assignmentDate).toLocaleDateString()}</td>
                                     <td><span className={`badge text-[12px] font-semibold ${assignedAsset?.status === 'assigned' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
                                         {assignedAsset?.status}</span></td>
-                                    <td className='flex gap-3 justify-center items-center py-6'>
-                                        {assignedAsset?.status === 'returned' ? <span className='badge text-[12px] font-semibold bg-green-100 text-green-700'>Returned</span> : assignedAsset?.assetType === 'Returnable' ? <button className="btn btn-sm btn-outline" onClick={() => document.getElementById(`modal_return_${assignedAsset?._id}`).showModal()}>Return</button> : <span className='text-gray-400 text-sm py-1 whitespace-nowrap'>No Actions</span>}
+                                    <td className='flex flex-wrap gap-3 justify-center items-center py-6'>
+                                        <button
+                                            className="btn btn-sm btn-outline btn-primary view-details-btn"
+                                            onClick={() => navigate(`/asset-details/${assignedAsset?.
+                                                assetId}`, { state: { from: '/dashboard/my-assets' } })}
+                                        >
+                                            View Details
+                                        </button>
+                                        {assignedAsset?.status === 'returned' ? <span className='badge text-[12px] font-semibold bg-green-100 text-green-700'>Returned</span> : assignedAsset?.assetType === 'Returnable' ?
+
+
+                                            <button className="btn btn-sm btn-outline btn-info" onClick={() => document.getElementById(`modal_return_${assignedAsset?._id}`).showModal()}>Return</button>
+                                            :
+                                            <span className='text-gray-400 text-sm py-1 whitespace-nowrap'>No Actions</span>}
                                         {/* Open the modal using document.getElementById('ID').showModal() method */}
                                         {/* Open the modal using document.getElementById('ID').showModal() method */}
                                         <dialog id={`modal_return_${assignedAsset?._id}`} className="modal modal-bottom sm:modal-middle">
@@ -160,7 +175,7 @@ const MyAssets = () => {
                                                 <div className="modal-action">
                                                     <form method="dialog" className='flex gap-3'>
                                                         {/* if there is a button in form, it will close the modal */}
-                                                        <button className="btn btn-sm btn-outline" onClick={() => handleReturnAsset(assignedAsset?._id, assignedAsset)}>Return</button>
+                                                        <button className="btn btn-sm btn-outline btn-info" onClick={() => handleReturnAsset(assignedAsset?._id, assignedAsset)}>Return</button>
                                                         <button className="btn btn-sm btn-outline">Cancel</button>
                                                     </form>
                                                 </div>
@@ -171,7 +186,8 @@ const MyAssets = () => {
                             )}
                         </tbody>
                     </table>
-                </div>}
+                </div>
+                : <h1 className='text-center text-gray-500'>No assets match your filters.</h1>}
 
         </div >
     );

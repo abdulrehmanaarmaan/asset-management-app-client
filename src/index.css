@@ -5,30 +5,382 @@ body {
     font-family: "Nunito Sans", sans-serif;
 }
 
-.navbar ul a.active {
+body {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dark-theme .navbar {
+    @apply border-none shadow-none
+}
+
+.navbar-center a {
+    @apply hover:text-blue-400;
+}
+
+.navbar-center a.active {
     @apply text-blue-500;
 }
 
-.drawer-side ul a.active {
-    @apply bg-blue-100
+.dark-theme .navbar-center a {
+    @apply hover:text-blue-300
 }
 
-.drawer-side ul a.active span {
-    @apply text-blue-500;
+.dark-theme .navbar-center a.active {
+    @apply text-blue-400
 }
 
-.drawer-side ul a span {
+.hamburger-menu {
+    @apply hover:bg-blue-50 hover:text-gray-100
+}
+
+.dark-theme .hamburger-menu {
+    @apply hover:bg-blue-800 hover:text-gray-200 border-gray-600 shadow-none
+}
+
+.drawer-side a.active {
+    @apply bg-blue-100 text-blue-500
+}
+
+.dark-theme .drawer-side a.active {
+    @apply bg-blue-800 text-blue-300
+}
+
+.drawer-side a {
     @apply hover:text-blue-500
 }
 
-.navbar .menu-sm a {
-    @apply text-center py-1 hover:bg-blue-100 rounded
+.dark-theme .drawer-side a {
+    @apply hover:text-blue-400
 }
 
-.navbar-end .login-btn.active {
+.dark-theme .drawer nav {
+    @apply border-none shadow-none
+}
+
+.dark-theme .sidebar-toggle-btn {
+    @apply hover:bg-blue-800 shadow-none
+}
+
+.dark-theme .from-cyan-400.to-blue-600 {
+    @apply from-cyan-300 to-blue-400
+}
+
+.dark-theme .dropdown-content {
+    @apply border border-gray-500/50
+}
+
+.menu-sm a {
+    @apply text-center py-1 hover:bg-blue-100 rounded hover:text-blue-400
+}
+
+.dark-theme .menu-sm a {
+    @apply hover:bg-blue-800 hover:text-blue-300
+}
+
+.login-btn.active {
     @apply text-blue-500 bg-blue-100
 }
 
-.navbar-end a {
+.dark-theme .login-btn.active {
+    @apply text-gray-100 bg-blue-800
+}
+
+.login-btn {
     @apply py-1 hover:bg-blue-100 rounded hover:text-blue-400
+}
+
+.dark-theme .login-btn {
+    @apply hover:bg-blue-800 hover:text-gray-200 border-gray-600 shadow-none
+}
+
+label {
+    @apply text-base-content/70
+}
+
+input {
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-base-content/50
+}
+
+select {
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-500
+}
+
+textarea {
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-500
+}
+
+.cursor-not-allowed {
+    @apply focus:outline-none focus:ring-0
+}
+
+.form a {
+    @apply hover:underline
+}
+
+.dark-theme .form a {
+    @apply hover:text-blue-400
+}
+
+.navbar-btn {
+    @apply hover:bg-blue-50
+}
+
+.dark-theme .navbar-btn {
+    @apply hover:bg-blue-900 border-gray-600 bg-gray-100 hover:text-gray-200 shadow-none text-black
+}
+
+.dark-theme {
+    @apply text-gray-200;
+}
+
+.dark-theme .bg-color {
+    @apply from-gray-900 to-gray-800;
+}
+
+.dark-theme .modal-box {
+    @apply bg-gray-700 text-gray-100;
+}
+
+.dark-theme .border-gray-300 {
+    @apply border-gray-600;
+}
+
+.dark-theme .bg-base-100 {
+    @apply bg-gray-800
+}
+
+.dark-theme label {
+    @apply text-gray-300;
+}
+
+.dark-theme input {
+    @apply text-gray-100 bg-gray-800 border-gray-600 placeholder:text-gray-500 focus:ring-blue-400;
+}
+
+.dark-theme select {
+    @apply text-gray-100 bg-gray-800 border-gray-600 placeholder:text-gray-500 focus:ring-blue-400;
+}
+
+.dark-theme textarea {
+    @apply text-gray-100 bg-gray-800 border-gray-600 placeholder:text-gray-500 focus:ring-blue-400;
+}
+
+.dark-theme form button.bg-white {
+    @apply bg-gray-800 border-gray-600 hover:bg-gray-700;
+}
+
+.dark-theme section.bg-blue-600 button {
+    @apply bg-blue-900 hover:bg-blue-800 border-none shadow-none
+}
+
+.dark-theme .text-gray-800 {
+    @apply text-gray-100;
+}
+
+.dark-theme .text-gray-600 {
+    @apply text-gray-300;
+}
+
+.dark-theme .text-gray-500 {
+    @apply text-gray-400
+}
+
+.dark-theme .bg-white {
+    @apply bg-gray-700 text-gray-100 shadow-none border border-gray-600;
+}
+
+.dark-theme .btn-success {
+    @apply bg-green-600 hover:bg-green-500 border-none shadow-none
+}
+
+.dark-theme .btn-error {
+    @apply bg-red-600 hover:bg-red-500 shadow-none;
+}
+
+.dark-theme .btn-info {
+    @apply bg-cyan-600 text-gray-100 border-none hover:bg-cyan-500 shadow-none
+}
+
+.dark-theme .close-modal-btn {
+    @apply btn-outline shadow-none;
+}
+
+.dark-theme button.btn.btn-sm.btn-outline {
+    @apply hover:shadow-none
+}
+
+.dark-theme button.btn.btn-outline {
+    @apply hover:shadow-none
+}
+
+.dark-theme .bg-gray-50 {
+    @apply bg-gray-800
+}
+
+.dark-theme .text-gray-900 {
+    @apply text-gray-100
+}
+
+.dark-theme footer a {
+    @apply hover:text-gray-100
+}
+
+.dark-theme footer a.transition {
+    @apply hover:bg-gray-800 ring-1 ring-white/5
+}
+
+.dark-theme .border-gray-300 {
+    @apply border-gray-600
+}
+
+.dark-theme .border-gray-200 {
+    @apply border-gray-700
+}
+
+.dark-theme button.bg-blue-500 {
+    @apply hover:bg-blue-600 border-none shadow-none;
+}
+
+.dark-theme .text-gray-700 {
+    @apply text-gray-300
+}
+
+.dark-theme .text-blue-600 {
+    @apply text-blue-400
+}
+
+.dark-theme .text-green-600 {
+    @apply text-green-400
+}
+
+.dark-theme .bg-blue-50 {
+    @apply bg-blue-900
+}
+
+.dark-theme .bg-blue-600 {
+    @apply bg-blue-500
+}
+
+.dark-theme .text-gray-500 {
+    @apply text-gray-400
+}
+
+.dark-theme .bg-gray-100 {
+    @apply bg-gray-800
+}
+
+.dark-theme .text-green-700.bg-green-100 {
+    @apply text-gray-100 bg-green-700 border-none
+}
+
+.dark-theme .text-red-700.bg-red-100 {
+    @apply text-gray-100 bg-red-700 border-none
+}
+
+.dark-theme .text-yellow-700.bg-yellow-100 {
+    @apply text-gray-100 bg-yellow-700 border-none
+}
+
+.dark-theme button.bg-blue-50 {
+    @apply border-gray-600 hover:bg-blue-900/30 text-blue-400
+}
+
+.dark-theme button.text-blue-600 {
+    @apply text-gray-200
+}
+
+.dark-theme .text-red-500 {
+    @apply text-red-400
+}
+
+.dark-theme tbody tr {
+    @apply hover:bg-gray-700
+}
+
+.dark-theme .sort-btn {
+    @apply hover:bg-gray-700
+}
+
+.dark-theme .pagination-btn {
+    @apply bg-base-200 text-base-content
+}
+
+.dark-theme .view-details-btn {
+    @apply bg-purple-600 hover:bg-purple-500 border-none text-gray-100 shadow-none
+}
+
+.dark-theme .text-blue-900 {
+    @apply text-blue-300
+}
+
+.dark-theme .text-blue-700 {
+    @apply text-blue-400
+}
+
+.dark-theme .border-blue-200 {
+    @apply border-blue-700
+}
+
+.dark-theme .bg-gray-200 {
+    @apply bg-gray-600 shadow-none
+}
+
+.dark-theme .text-gray-400 {
+    @apply text-gray-500
+}
+
+.dark-theme a.bg-blue-500 {
+    @apply hover:bg-blue-600 border-none shadow-none;
+}
+
+.dark-theme .modal-box {
+    @apply from-gray-900 to-gray-800
+}
+
+.dark-theme .bg-indigo-50 {
+    @apply bg-indigo-950
+}
+
+.dark-theme .border-indigo-200 {
+    @apply border-indigo-800
+}
+
+.dark-theme .border-indigo-300 {
+    @apply border-indigo-700
+}
+
+.dark-theme .text-indigo-700 {
+    @apply text-indigo-300
+}
+
+.dark-theme .text-indigo-800 {
+    @apply text-indigo-200
+}
+
+.dark-theme .dropdown-option {
+    @apply hover:bg-gray-700
+}
+
+.dark-theme .bg-base-300 {
+    @apply bg-gray-800
+}
+
+.dark-theme .bg-base-200 {
+    @apply bg-gray-900
+}
+
+.dark-theme .text-gray-400 {
+    @apply text-gray-300
+}
+
+.dark-theme .text-blue-600 {
+    @apply text-blue-400
+}
+
+.dark-theme .text-green-500 {
+    @apply text-green-300
+}
+
+.dark-theme .view-assets-btn {
+    @apply hover:bg-gray-600
 }

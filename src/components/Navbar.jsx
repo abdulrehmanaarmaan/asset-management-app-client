@@ -2,17 +2,24 @@
 import { NavLink } from 'react-router';
 import { AuthContext } from '../contexts/AuthContext';
 import { use } from 'react';
-import { FiPackage } from 'react-icons/fi';
+import { FiMoon, FiPackage, FiSun } from 'react-icons/fi';
 import useUserInfo from '../hooks/UseUserInfo';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 const Navbar = () => {
-    const publicLinks = <>
-        <NavLink to='/' className='hover:text-blue-400'>Home</NavLink>
-        <NavLink to='/registration/employee' className='hover:text-blue-400'>Join as Employee</NavLink>
-        <NavLink to='/registration/hr-manager' className=' hover:text-blue-400'>Join as HR Manager</NavLink>
-    </>
 
     const { user, logout } = use(AuthContext);
+
+    const publicLinks = <>
+        <NavLink to='/'>Home</NavLink>
+        <NavLink to='/about'>About</NavLink>
+        <NavLink to='/blog'>Blog</NavLink>
+        <NavLink to='/contact'>Contact</NavLink>
+        {!user && <>
+            <NavLink to='/registration/employee'>Join as Employee</NavLink>
+            <NavLink to='/registration/hr-manager'>Join as HR Manager</NavLink>
+        </>}
+    </>
 
     const handleLogout = () => {
         logout()
@@ -26,16 +33,18 @@ const Navbar = () => {
 
     const { role } = useUserInfo();
 
+    const { darkMode, setDarkMode } = use(ThemeContext)
+
     return (
-        <div className="navbar bg-base-100 shadow-sm px-4">
+        <div className="navbar bg-base-100 border-b border-base-300 px-4 sticky top-0 z-1">
             <div className="navbar-start gap-4">
                 <NavLink to='/' className="text-xl text-blue-600 font-semibold flex items-center gap-2">
-                    <FiPackage className='max-w-8'></FiPackage>
+                    <FiPackage className='w-8 h-8'></FiPackage>
                     <span className='font-extrabold bg-linear-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent tracking-tight'>AssetVerse</span>
                 </NavLink>
 
                 <div className="dropdown dropdown-end">
-                    <div tabIndex={0} role="button" className="btn lg:hidden hover:bg-blue-50">
+                    <div tabIndex={0} role="button" className="btn lg:hidden hamburger-menu">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
                     </div>
@@ -52,13 +61,17 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
+                <button onClick={() => setDarkMode(!darkMode)} className='btn btn-circle mr-4 navbar-btn hidden md:flex' id='theme-toggler'
+                    aria-label='Toggle theme'>{darkMode ? <FiSun className='w-5 h-5'></FiSun> : <FiMoon className='w-5 h-5'></FiMoon>}</button>
+
                 {user ? <div className='flex items-center gap-4'>
-                    <button className="btn hover:bg-blue-50 md:inline-flex hidden" onClick={handleLogout}>Log out</button>
+
+                    <button className="btn md:inline-flex hidden navbar-btn" onClick={handleLogout}>Log out</button>
 
                     <div className="dropdown dropdown-bottom dropdown-end">
-                        <img referrerPolicy='no-referrer' src={user?.photoURL} alt="" className='rounded-full max-w-10 max-h-10 hover:cursor-pointer' tabIndex={0} />
+                        <img referrerPolicy='no-referrer' src={user?.photoURL} alt="" className='rounded-full w-10 h-10 hover:cursor-pointer object-cover' tabIndex={0} />
 
-                        <div tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 p-2 shadow-sm gap-1 w-52 mt-3 text-center">
+                        <div tabIndex="-1" className="dropdown-content menu menu-sm bg-base-100 rounded-box z-1 shadow gap-1 w-52 p-2 mt-3">
                             {role === 'hr' ? <>
                                 <NavLink to='/dashboard/asset-list' className='hover:bg-blue-50'>Asset List</NavLink>
                                 <NavLink to='/dashboard/add-asset' className='hover:bg-blue-50'>Add an Asset</NavLink>
@@ -71,12 +84,31 @@ const Navbar = () => {
                                     <NavLink to='/dashboard/my-assets' className='hover:bg-blue-50'>My Assets</NavLink>
                                     <NavLink to='/dashboard/request-asset' className='hover:bg-blue-50'>Request an Asset</NavLink>
                                     <NavLink to='/dashboard/my-team' className='hover:bg-blue-50'>My Team</NavLink>
-                                    <NavLink to='/dashboard/profile' className='hover:bg-blue-50'>Profile</NavLink>
                                 </>}
+                            <NavLink to='/dashboard/profile' className='hover:bg-blue-50'>Profile</NavLink>
 
-                            <div className='border md:border-none my-1 md:my-0'></div>
+                            <div className='border md:border-none my-1 md:hidden'></div>
 
-                            <button className="btn hover:bg-blue-50 md:hidden" onClick={handleLogout}>Log out</button>
+                            <div className="px-3 py-2 hover:bg-base-200 rounded md:hidden navbar-btn">
+                                <div className="flex items-center justify-between">
+                                    <span className="flex items-center gap-2 text-sm">
+                                        {darkMode ? <FiSun /> : <FiMoon />}
+                                        Theme
+                                    </span>
+
+                                    <input
+                                        type="checkbox"
+                                        className="toggle toggle-sm"
+                                        checked={darkMode}
+                                        onChange={() => setDarkMode(!darkMode)}
+                                        aria-label="Toggle theme"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className='border md:border-none my-1 md:hidden'></div>
+
+                            <button className="btn md:hidden navbar-btn" onClick={handleLogout}>Log out</button>
                         </div>
                     </div>
                 </div >

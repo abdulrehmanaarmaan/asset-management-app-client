@@ -115,7 +115,7 @@ const MyEmployee = () => {
                                 </td>
                                 <td className='text-gray-600'>{new Date(employeesPerCompany.find(employeeEmail => employeeEmail?.employeeEmail === assignedEmployee?.email)?.affiliationDate).toLocaleDateString()}</td>
                                 <td>{assignedAssets.filter(assignedAsset => assignedAsset?.employeeEmail === assignedEmployee?.email)?.length}</td>
-                                <td className='flex gap-3 justify-center items-center py-6 min-w-[150px]'>
+                                <td className='flex gap-3 justify-center items-center py-6 min-w-37.5'>
 
                                     <button className="btn btn-sm btn-error text-white" onClick={() => document.getElementById(`modal_remove_${assignedEmployee?._id}`).showModal()}>Remove from Team</button>
                                 </td>

@@ -8,25 +8,10 @@ import Loader from '../components/Loader';
 import axios from 'axios';
 import useAxiosSecure from '../hooks/UseAxiosSecure';
 import useUserInfo from '../hooks/UseUserInfo';
+import { useNavigate } from 'react-router';
 // import { AuthContext } from '../contexts/AuthContext';
 
 const AssetList = () => {
-
-    // 🔥 NEW: Pagination state
-    // const [page, setPage] = useState(1);
-    // const limit = 10;
-
-    // 🔥 UPDATED React Query
-    // const { data, refetch, isPending } = useQuery({
-    // queryKey: ['assets', page],
-    // queryFn: async () => {
-    // const result = await axiosInstanceSecure.get(`/assets?page=${page}&limit=${limit}`);
-    // return result.data;
-    // }
-    // });
-
-    // const assets = data?.data || [];
-    // const pagination = data?.pagination;
 
     const [page, setPage] = useState(1);
     const limit = 10;
@@ -61,6 +46,8 @@ const AssetList = () => {
     const { handleSubmit, register, formState: { errors }, reset } = useForm()
 
     const { loader, startLoading, stopLoading } = useLoader()
+
+    const navigate = useNavigate();
 
     const handleEditAsset = (data, id) => {
         startLoading()
@@ -167,17 +154,42 @@ const AssetList = () => {
 
     console.log(allAssets)
 
+    // 🔹 Sorting state
+    const [sortField, setSortField] = useState('dateAdded'); // default sort field
+    const [sortOrder, setSortOrder] = useState('desc'); // 'asc' or 'desc'
+
+    const sortedAssets = [...allAssets].sort((a, b) => {
+        let valA = a[sortField];
+        let valB = b[sortField];
+
+        // if sorting by date, convert to timestamps
+        if (sortField === 'dateAdded') {
+            valA = new Date(valA).getTime();
+            valB = new Date(valB).getTime();
+        }
+
+        // if numeric, make sure to convert to numbers
+        if (sortField === 'productQuantity') {
+            valA = Number(valA);
+            valB = Number(valB);
+        }
+
+        if (valA < valB) return sortOrder === 'asc' ? -1 : 1;
+        if (valA > valB) return sortOrder === 'asc' ? 1 : -1;
+        return 0;
+    });
+
     if (loader) return <Loader></Loader>
 
     return (
         <div>
-            <h1 className='text-3xl font-semibold text-gray-800 tracking-tight text-center mb-6'>Asset List</h1>
-            {allAssets?.length > 0 ? <p className='text-2xl font-bold mb-6 text-center text-gray-600'>Page: {pagination?.page} of {pagination?.totalPages}</p>
-                : <p className='text-2xl font-bold mb-6 text-center text-gray-600'>No assets added yet</p>}
+            <h1 className='text-3xl font-semibold text-gray-800 tracking-tight text-center mb-6 heading'>Asset List</h1>
+            {allAssets?.length > 0 ? <p className='text-2xl font-bold mb-6 text-center text-gray-600 sub-heading'>Page: {pagination?.page} of {pagination?.totalPages}</p>
+                : <p className='text-2xl font-bold mb-6 text-center text-gray-600 sub-heading'>No assets added yet</p>}
             <div className="shadow-sm overflow-x-auto">
                 {allAssets.length > 0 && <table className="table text-center border-t border-gray-300 rounded-none">
                     {/* head */}
-                    <thead className='bg-gray-100 text-gray-600'>
+                    <thead className='bg-gray-100 text-gray-600 sub-heading'>
                         <tr>
                             <th>Asset Image</th>
 
@@ -185,15 +197,39 @@ const AssetList = () => {
 
                             <th>Type</th>
 
-                            <th>Quantity</th>
+                            <th
+                                className='cursor-pointer hover:bg-gray-300 transition-all duration-200 sort-btn'
+                                title="Click to sort ascending / descending"
+                                onClick={() => {
+                                    // toggle sort order if same column clicked
+                                    if (sortField === 'productQuantity') {
+                                        setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc');
+                                    } else {
+                                        setSortField('productQuantity');
+                                        setSortOrder('asc'); // default
+                                    }
+                                }}
+                            >Quantity {sortField === 'productQuantity' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}</th>
 
-                            <th>Date Added</th>
+                            <th
+                                className='cursor-pointer hover:bg-gray-300 transition-all duration-200 sort-btn'
+                                title="Click to sort ascending / descending"
+                                onClick={() => {
+                                    if (sortField === 'dateAdded') {
+                                        setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc');
+                                    } else {
+                                        setSortField('dateAdded');
+                                        setSortOrder('asc');
+                                    }
+                                }}
+                            >Date Added {sortField === 'dateAdded' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}
+                            </th>
 
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody className=''>
-                        {isLoading ? <Loader></Loader> : allAssets.map(asset =>
+                        {isLoading ? <Loader></Loader> : sortedAssets.map(asset =>
                             <tr key={asset?._id} className='hover:bg-white'>
                                 <td>
                                     <img
@@ -205,16 +241,23 @@ const AssetList = () => {
 
                                 <td className='font-medium'>{asset?.productName}</td>
 
-                                <td className='min-w-[120px]'><span className={`badge text-[12px] font-semibold whitespace-nowrap ${asset?.productType === 'Returnable' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>{asset?.productType}</span>
+                                <td className='min-w-30'><span className={`badge text-[12px] font-semibold whitespace-nowrap ${asset?.productType === 'Returnable' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>{asset?.productType}</span>
                                 </td>
 
                                 <td>
                                     <button className="">{asset?.productQuantity}</button>
                                 </td>
 
-                                <td className='text-gray-600'>{new Date(asset?.dateAdded).toLocaleDateString()}</td>
+                                <td className='text-gray-600 sub-heading'>{new Date(asset?.dateAdded).toLocaleDateString()}</td>
 
-                                <td className='flex gap-3 justify-center items-center py-6'>
+                                <td className='flex flex-wrap md:flex-row gap-3 justify-center items-center py-6'>
+
+                                    <button
+                                        className="btn btn-sm btn-outline btn-primary view-details-btn"
+                                        onClick={() => navigate(`/asset-details/${asset?._id}`, { state: { from: '/dashboard/asset-list' } })}
+                                    >
+                                        View Details
+                                    </button>
 
                                     <button className="btn btn-sm btn-outline btn-info" onClick={() => {
                                         setSelectedAsset(asset)
@@ -257,7 +300,7 @@ const AssetList = () => {
                                     <div>
                                         <h1 className='text-2xl font-bold text-center mb-4'>Update Asset Info: {selectedAsset?.productName}</h1>
                                     </div>
-                                    <div className="card bg-base-100 w-fit shrink-0 border border-gray-300 mx-auto">
+                                    <div className="card bg-base-100 w-fit shrink-0 border border-gray-300 mx-auto forms">
                                         <div className="card-body">
                                             <form onSubmit={handleSubmit(data => handleEditAsset(data, selectedAsset?._id))} method="dialog">
                                                 <fieldset className="fieldset grid-cols-1 gap-4 text-left">
@@ -301,7 +344,7 @@ const AssetList = () => {
                                                     className='text-red-500 mt-2'>All fields are required.</p>}
                                                 <button className="btn bg-blue-500 mt-3 max-w-full w-full text-white hover:bg-blue-400 rounded-lg">Update Asset</button>
                                             </form>
-                                            <button className="btn rounded-lg" onClick={() => document.getElementById('modal_edit').
+                                            <button className="btn rounded-lg close-modal-btn" onClick={() => document.getElementById('modal_edit').
                                                 close()}>Cancel</button>
                                         </div>
                                     </div>
@@ -315,7 +358,7 @@ const AssetList = () => {
             {allAssets.length > 0 && <div className="flex justify-center gap-2 mt-5">
 
                 <button
-                    className="btn btn-sm"
+                    className={`btn btn-sm pagination-btn ${page !== 1 && 'cursor-pointer'}`}
                     disabled={page === 1}
                     onClick={() => setPage(prev => prev - 1)}>
                     Previous
@@ -332,7 +375,7 @@ const AssetList = () => {
                 ))}
 
                 <button
-                    className="btn btn-sm"
+                    className={`btn btn-sm pagination-btn ${(!pagination && page !== pagination?.totalPages) && 'cursor-pointer'}`}
                     disabled={pagination && page === pagination?.totalPages}
                     onClick={() => setPage(prev => prev + 1)}>
                     Next

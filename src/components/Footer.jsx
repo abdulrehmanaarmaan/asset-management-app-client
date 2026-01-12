@@ -1,10 +1,14 @@
 
-import React from 'react';
+import React, { use } from 'react';
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { AuthContext } from '../contexts/AuthContext';
 
 const Footer = () => {
+
+    const { user } = use(AuthContext);
+
     return (
-        <footer className="bg-gray-50 border-t mt-10">
+        <footer className="bg-white">
             <div className="max-w-7xl px-6 py-10 grid grid-cols-1 md:grid-cols-[2fr_2fr_1fr] lg:grid-cols-[2fr_2fr_2fr_1fr] gap-8 text-center md:text-left">
                 {/* Copyright */}
                 <div>
@@ -16,16 +20,22 @@ const Footer = () => {
                 {/* Contact Details */}
                 <div>
                     <h3 className="text-lg font-semibold mb-3">Contact</h3>
-                    <p className="text-sm text-gray-600">Email: assetverse@yourcompany.com</p>
-                    <p className="text-sm text-gray-600">Phone: +1 234 567 890</p>
+                    <p className="text-sm text-gray-600">Email: <a href="mailto:assetverse@yourcompany.com" className="hover:text-gray-900">assetverse@gmail.com</a></p>
+                    <p className="text-sm text-gray-600">Phone: <a href="tel:+8801337910777" className="hover:text-gray-900">+880 1337 910777</a></p>
                 </div>
                 {/* Quick Links + Social */}
                 <div>
                     <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
-                    <ul className="space-y-2 text-sm text-gray-600">
+                    <ul className="text-sm text-gray-600 flex flex-row flex-wrap md:flex-col md:items-start items-center gap-y-3 gap-x-5 justify-center">
                         <li><a href="/" className="hover:text-gray-900">Home</a></li>
-                        <li><a href='/registration/employee' className="hover:text-gray-900">Join as Employee</a></li>
-                        <li><a href='/registration/hr-manager' className="hover:text-gray-900">Join as HR Manager</a></li>
+                        <li><a href="/about" className="hover:text-gray-900">About</a></li>
+                        <li><a href="/blog" className="hover:text-gray-900">Blog</a></li>
+                        <li><a href="/contact" className="hover:text-gray-900">Contact</a></li>
+                        {!user && <>
+                            <li><a href='/registration/employee' className="hover:text-gray-900">Join as Employee</a></li>
+                            <li><a href='/registration/hr-manager' className="hover:text-gray-900">Join as HR Manager</a></li>
+                            <li><a href="/login" className="hover:text-gray-900">Login</a></li>
+                        </>}
                     </ul>
                 </div>
                 <div>

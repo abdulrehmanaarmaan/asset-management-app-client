@@ -64,8 +64,9 @@ const Registration = () => {
                                             ...rest, companyLogo: companyLogoUrl, profileImage: userProfileUrl, createdAt: new Date(), updatedAt: new Date()
                                         })
                                             .then(res => {
-                                                navigate('/dashboard/asset-list')
+                                                navigate('/dashboard/asset-list', { replace: true })
                                                 console.log(res?.data)
+                                                localStorage.setItem('lastLoggedInEmail', result?.user?.email)
                                                 stopLoading()
                                                 toast.success('Registered successfully')
                                             })
@@ -138,8 +139,9 @@ const Registration = () => {
                                     ...rest, profileImage: userProfileUrl, createdAt: new Date(), updatedAt: new Date()
                                 })
                                     .then(res => {
-                                        navigate('/dashboard/request-asset')
+                                        navigate('/dashboard/request-asset', { replace: true })
                                         console.log('user added', res?.data)
+                                        localStorage.setItem('lastLoggedInEmail', result?.user?.email)
                                         stopLoading()
                                         toast.success('Registered successfully')
                                     })
@@ -221,9 +223,9 @@ const Registration = () => {
                                     </div>
                                 </fieldset>
                                 {Object.values(errors).some(err => err.type === 'required') && <p className='text-red-500 mt-2'>All fields are required.</p>}
-                                <button className="btn bg-blue-500 mt-3 max-w-full w-full text-white hover:bg-blue-400 rounded-lg">Register</button>
+                                <button className="btn bg-blue-500 mt-3 w-full text-white hover:bg-blue-400 rounded-lg">Register</button>
 
-                                <p className='text-center font-medium mt-3'>Already have an account? <NavLink to='/login' className='hover:text-blue-500 hover:underline'>Log in</NavLink></p>
+                                <p className='text-center font-medium mt-3'>Already have an account? <NavLink to='/login' className='hover:text-blue-500'>Log in</NavLink></p>
                             </form>
                         </div>
                     </div>
@@ -237,11 +239,11 @@ const Registration = () => {
             <div className="hero px-4">
                 <div className="hero-content flex-col p-0">
                     <div>
-                        <h1 className='text-3xl font-semibold text-gray-800 tracking-tight text-center mb-6'>Create a HR Manager Account</h1>
+                        <h1 className='text-3xl font-semibold text-gray-800 tracking-tight text-center mb-6 heading'>Create a HR Manager Account</h1>
                     </div>
-                    <div className="card bg-base-100 w-full shrink-0 border border-gray-300">
+                    <div className="card bg-base-100 w-full shrink-0 border border-gray-300 forms">
                         <div className="card-body">
-                            <form onSubmit={handleSubmit(handleManagerRegistration)}>
+                            <form onSubmit={handleSubmit(handleManagerRegistration)} className='form'>
                                 <fieldset className="fieldset grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                         <label className="label mb-1">Email</label>
@@ -320,10 +322,10 @@ const Registration = () => {
                                 </fieldset>
                                 {Object.values(errors).some(err => err.type === 'required') && <p className='text-red-500 mt-2'>All
                                     fields are required.</p>}
-                                <button className="btn bg-blue-500 mt-3 max-w-full w-full text-white hover:bg-blue-400 rounded-lg">Register</button>
+                                <button className="btn bg-blue-500 mt-3 w-full text-white hover:bg-blue-400 rounded-lg">Register</button>
 
                                 <p className='text-center font-medium mt-3'>Already have an account? <NavLink
-                                    to='/login' className='hover:text-blue-500 hover:underline'>Log in</NavLink></p>
+                                    to='/login' className='hover:text-blue-500'>Log in</NavLink></p>
                             </form>
                         </div>
                     </div>

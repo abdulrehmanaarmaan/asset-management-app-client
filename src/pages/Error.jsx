@@ -1,13 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { AlertCircle } from 'lucide-react';
-import { Link, useLocation, useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const Error = () => {
-
-    const location = useLocation()
 
     const navigate = useNavigate();
 
@@ -25,7 +23,7 @@ const Error = () => {
     return (
         <div>
             <Navbar></Navbar>
-            <div className='py-12 bg-linear-to-b from-gray-50 to-gray-200 flex items-center justify-center min-h-[60vh]'>
+            <div className='py-12 bg-linear-to-b from-gray-50 to-gray-200 flex items-center justify-center min-h-[60vh] bg-color'>
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}

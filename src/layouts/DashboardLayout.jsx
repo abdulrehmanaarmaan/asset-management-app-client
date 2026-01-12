@@ -1,4 +1,4 @@
-import { CircleUserRound, Clipboard, ClipboardList, ClipboardPlus, House, PackageCheck, PackagePlus, PanelLeftClose, PanelLeftOpen, PieChart, Sparkles, User, Users } from 'lucide-react';
+import { CircleUserRound, Clipboard, ClipboardList, ClipboardPlus, FileText, House, Info, PackageCheck, PackagePlus, PanelLeftClose, PanelLeftOpen, PhoneCall, PieChart, Sparkles, User, Users } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router';
 import useUserInfo from '../hooks/UseUserInfo';
@@ -28,8 +28,8 @@ const DashboardLayout = () => {
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content">
                 {/* Navbar */}
-                <nav className="navbar w-full bg-base-300 gap-3 shadow-sm border border-gray-300">
-                    <label htmlFor="my-drawer-4" aria-label="open sidebar" className="btn btn-square btn-ghost hover:bg-blue-100 border-0" onClick={() => openSidebar(!sidebar)}>
+                <nav className="navbar w-full bg-base-300 gap-3 sticky top-0 z-1">
+                    <label htmlFor="my-drawer-4" aria-label="open sidebar" className="btn btn-square btn-ghost hover:bg-blue-100 border-0 sidebar-toggle-btn" onClick={() => openSidebar(!sidebar)}>
                         {/* Sidebar toggle icon */}
                         {!sidebar ? <PanelLeftOpen></PanelLeftOpen> : <PanelLeftClose></PanelLeftClose>}
                     </label>
@@ -39,7 +39,7 @@ const DashboardLayout = () => {
                     </NavLink>
                 </nav>
                 {/* Page content here */}
-                <div className={`py-12 bg-linear-to-b from-gray-50 to-gray-200 min-h-screen`}>
+                <div className='py-12 bg-linear-to-b from-gray-50 to-gray-200 min-h-screen bg-color'>
                     <Outlet></Outlet>
                 </div>
             </div>
@@ -49,62 +49,86 @@ const DashboardLayout = () => {
                 <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
                     {/* Sidebar content here */}
                     <ul className="menu w-full grow gap-3.5">
-                        {/* List item */}
+
                         <li>
-                            <NavLink to='/' className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent" data-tip="Home">
+                            <NavLink to='/' className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent text-gray-600" data-tip="Home">
                                 {/* Home icon */}
-                                <House className='max-w-4'></House>
+                                <House className='w-4 h-4'></House>
                                 <span className="is-drawer-close:hidden">Home</span>
                             </NavLink>
                         </li>
 
-                        {/* List item */}
+                        <li>
+                            <NavLink to='/about' className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent text-gray-600" data-tip="About">
+                                {/* Home icon */}
+                                <Info className='w-4 h-4'></Info>
+                                <span className="is-drawer-close:hidden">About</span>
+                            </NavLink>
+                        </li>
+
+                        <li>
+                            <NavLink to='/blog' className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent text-gray-600" data-tip="Blog">
+                                {/* Home icon */}
+                                <FileText className='w-4 h-4'></FileText>
+                                <span className="is-drawer-close:hidden">Blog</span>
+                            </NavLink>
+                        </li>
+
+                        <li>
+                            <NavLink to='/contact' className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent text-gray-600" data-tip="Contact">
+                                {/* Home icon */}
+                                <PhoneCall className='w-4 h-4'></PhoneCall>
+                                <span className="is-drawer-close:hidden">Contact</span>
+                            </NavLink>
+                        </li>
+
+
                         {role === 'hr' ?
                             <>
                                 <li>
-                                    <NavLink to='/dashboard/asset-list' className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent" data-tip="Asset List">
-                                        <Clipboard className='max-w-4'></Clipboard>
+                                    <NavLink to='/dashboard/asset-list' className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent text-gray-800" data-tip="Asset List">
+                                        <Clipboard className='w-4 h-4'></Clipboard>
                                         <span className="is-drawer-close:hidden">Asset List</span>
                                     </NavLink>
                                 </li>
 
                                 <li>
-                                    <NavLink to='/dashboard/add-asset' className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent" data-tip="Add an Asset">
+                                    <NavLink to='/dashboard/add-asset' className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent text-gray-800" data-tip="Add an Asset">
                                         {/* Settings icon */}
-                                        <PackagePlus className='max-w-4'></PackagePlus>
+                                        <PackagePlus className='w-4 h-4'></PackagePlus>
                                         <span className="is-drawer-close:hidden">Add an Asset</span>
                                     </NavLink>
                                 </li>
 
                                 <li>
-                                    <NavLink to='/dashboard/all-requests' className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent" data-tip="All Requests">
+                                    <NavLink to='/dashboard/all-requests' className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent text-gray-800" data-tip="All Requests">
                                         {/* Settings icon */}
-                                        <ClipboardList className='max-w-4'></ClipboardList>
+                                        <ClipboardList className='w-4 h-4'></ClipboardList>
                                         <span className="is-drawer-close:hidden">All Requests</span>
                                     </NavLink>
                                 </li>
 
                                 <li>
-                                    <NavLink to='/dashboard/my-employee-list' className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent" data-tip="My Employee List">
+                                    <NavLink to='/dashboard/my-employee-list' className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent text-gray-800" data-tip="My Employee List">
                                         {/* Settings icon */}
-                                        <User className='max-w-4'></User>
+                                        <User className='w-4 h-4'></User>
                                         <span className="is-drawer-close:hidden">My Employee List</span>
                                     </NavLink>
                                 </li>
 
                                 <li>
-                                    <NavLink to='/dashboard/upgrade-package' className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent" data-tip="Upgrade Package">
+                                    <NavLink to='/dashboard/upgrade-package' className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent text-gray-800" data-tip="Upgrade Package">
                                         {/* Settings icon */}
-                                        <Sparkles className='max-w-4'></Sparkles>
+                                        <Sparkles className='w-4 h-4'></Sparkles>
                                         <span className="is-drawer-close:hidden">Upgrade Package</span>
                                     </NavLink>
                                 </li>
                                 <li>
                                     <NavLink to='/dashboard/analytics'
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent"
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent text-gray-800"
                                         data-tip="Analytics">
                                         {/* Settings icon */}
-                                        <PieChart className='max-w-4'></PieChart>
+                                        <PieChart className='w-4 h-4'></PieChart>
                                         <span className="is-drawer-close:hidden">Analytics</span>
                                     </NavLink>
                                 </li>
@@ -112,41 +136,41 @@ const DashboardLayout = () => {
                             : <>
                                 <li>
                                     <NavLink to='/dashboard/my-assets'
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent" data-tip="My Assets">
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent text-gray-800" data-tip="My Assets">
                                         {/* Settings icon */}
-                                        <PackageCheck className='max-w-4'></PackageCheck>
+                                        <PackageCheck className='w-4 h-4'></PackageCheck>
                                         <span className="is-drawer-close:hidden">My Assets</span>
                                     </NavLink>
                                 </li>
 
                                 <li>
                                     <NavLink to='/dashboard/request-asset'
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent" data-tip="Request an Asset">
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent text-gray-800" data-tip="Request an Asset">
                                         {/* Settings icon */}
-                                        <ClipboardPlus className='max-w-4'></ClipboardPlus>
+                                        <ClipboardPlus className='w-4 h-4'></ClipboardPlus>
                                         <span className="is-drawer-close:hidden">Request an Asset</span>
                                     </NavLink>
                                 </li>
 
                                 <li>
                                     <NavLink to='/dashboard/my-team'
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent" data-tip="My Team">
+                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent text-gray-800" data-tip="My Team">
                                         {/* Settings icon */}
-                                        <Users className='max-w-4'></Users>
+                                        <Users className='w-4 h-4'></Users>
                                         <span className="is-drawer-close:hidden">My Team</span>
-                                    </NavLink>
-                                </li>
-
-                                <li>
-                                    <NavLink to='/dashboard/profile'
-                                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent" data-tip="Profile">
-                                        {/* Settings icon */}
-                                        <CircleUserRound className='max-w-4'></CircleUserRound>
-                                        <span className="is-drawer-close:hidden">Profile</span>
                                     </NavLink>
                                 </li>
                             </>
                         }
+                        <li>
+                            <NavLink to='/dashboard/profile'
+                                className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center bg-transparent text-gray-800" data-tip="Profile">
+                                {/* Settings icon */}
+                                <CircleUserRound className='w-4 h-4'></CircleUserRound>
+                                <span className="is-drawer-close:hidden">Profile</span>
+                            </NavLink>
+                        </li>
+
                     </ul>
                 </div>
             </div>

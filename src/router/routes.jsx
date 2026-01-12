@@ -21,6 +21,11 @@ import UpgradeCancelled from "../pages/UpgradeCancelled";
 import MyTeam from "../pages/MyTeam";
 import Analytics from "../pages/Analytics";
 import DashboardError from "../pages/DashboardError";
+import About from "../pages/About";
+import Blog from "../pages/Blog";
+import Contact from "../pages/Contact";
+import PublicRoute from "../routes/PublicRoute";
+import AssetDetails from "../pages/AssetDetails";
 
 const router = createBrowserRouter([
     {
@@ -34,12 +39,28 @@ const router = createBrowserRouter([
                 Component: Home
             },
             {
+                path: '/about',
+                Component: About
+            },
+            {
+                path: '/blog',
+                Component: Blog
+            },
+            {
+                path: '/contact',
+                Component: Contact
+            },
+            {
                 path: '/registration/:role',
-                Component: Registration
+                element: <PublicRoute><Registration></Registration></PublicRoute>
             },
             {
                 path: '/login',
-                Component: Login
+                element: <PublicRoute><Login></Login></PublicRoute>
+            },
+            {
+                path: '/asset-details/:id',
+                element: <PrivateRoute><AssetDetails></AssetDetails></PrivateRoute>
             }
         ]
     },
@@ -95,7 +116,7 @@ const router = createBrowserRouter([
             },
             {
                 path: 'profile',
-                element: <PrivateRoute><EmployeeRoute><Profile></Profile></EmployeeRoute></PrivateRoute >
+                element: <PrivateRoute><Profile></Profile></PrivateRoute >
             },
             {
                 path: '*',

@@ -99,4 +99,4 @@ Server: nodemon index.js
 
 ### Clone The Repositories
 - https://github.com/abdulrehmanaarmaan/assetverse-client.git
-- https://github.com/abdulrehmanaarmaan/Assignment-11-Server
+- https://github.com/abdulrehmanaarmaan/assetverse-server.git

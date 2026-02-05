@@ -98,5 +98,5 @@ Client: npm run dev
 Server: nodemon index.js
 
 ### Clone The Repositories
-- https://github.com/abdulrehmanaarmaan/Assignment-11-Client
+- https://github.com/abdulrehmanaarmaan/assetverse-client.git
 - https://github.com/abdulrehmanaarmaan/Assignment-11-Server
